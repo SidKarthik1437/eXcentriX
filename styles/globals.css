@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family:ca;
+    src: url(28\ Days\ Later.ttf);
+}
+
+.fonta {
+    font-family:ca;
+    color:white;
+}
