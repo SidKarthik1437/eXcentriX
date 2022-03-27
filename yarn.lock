@@ -695,6 +695,61 @@
   "resolved" "https://registry.npmjs.org/@next/env/-/env-12.1.1.tgz"
   "version" "12.1.1"
 
+"@next/swc-android-arm-eabi@12.1.1":
+  "integrity" "sha512-phV9H6d1eK1oVC7nmKKcCXvgOWT4K7aLC/beyO6yvbFC4XtBLE21vPwVl7B4ybz5xjSa6TXoR3TMR6vkW6Mv+A=="
+  "resolved" "https://registry.npmjs.org/@next/swc-android-arm-eabi/-/swc-android-arm-eabi-12.1.1.tgz"
+  "version" "12.1.1"
+
+"@next/swc-android-arm64@12.1.1":
+  "integrity" "sha512-X5qEz0YeeYT0Gz2wXPAEtRKEuAsLUIEgC/DDfS98t/5Idjv0S4aqIX+TQdzoXP5bwQkIr+mSg+MBIdLtbtnCsA=="
+  "resolved" "https://registry.npmjs.org/@next/swc-android-arm64/-/swc-android-arm64-12.1.1.tgz"
+  "version" "12.1.1"
+
+"@next/swc-darwin-arm64@12.1.1":
+  "integrity" "sha512-bKKSNaTdnO3XPnfaR4NSpPcbs80fdbtOYC2lgtqLzA0bOMioupixMP5GrA/gfJHwh7GRH+A+sbgKQWsqSsYAqQ=="
+  "resolved" "https://registry.npmjs.org/@next/swc-darwin-arm64/-/swc-darwin-arm64-12.1.1.tgz"
+  "version" "12.1.1"
+
+"@next/swc-darwin-x64@12.1.1":
+  "integrity" "sha512-2VOsA6WLDuDBA6935djohWGGeUIKeQhXwDwu1CKx1b8+6YMMIvFr/y2dpPWoct+5/IjFz84a2MnbABwpoNB9YA=="
+  "resolved" "https://registry.npmjs.org/@next/swc-darwin-x64/-/swc-darwin-x64-12.1.1.tgz"
+  "version" "12.1.1"
+
+"@next/swc-linux-arm-gnueabihf@12.1.1":
+  "integrity" "sha512-1urXtWwqjqbbpJBWeJYz5ATgelKacVNdKIdhfahbsmW+DZGoK5TYovgieyHFYUCyHdTuKeLTVR62ahIRUBv1YA=="
+  "resolved" "https://registry.npmjs.org/@next/swc-linux-arm-gnueabihf/-/swc-linux-arm-gnueabihf-12.1.1.tgz"
+  "version" "12.1.1"
+
+"@next/swc-linux-arm64-gnu@12.1.1":
+  "integrity" "sha512-CDD9yFuknDvTOzzDnvfmb58USI5Vu6FUyzw96udKj7KA/n1YrNQ4K8X7KsDCRZoqfRWYceAyj1EpwHkfdiB7bg=="
+  "resolved" "https://registry.npmjs.org/@next/swc-linux-arm64-gnu/-/swc-linux-arm64-gnu-12.1.1.tgz"
+  "version" "12.1.1"
+
+"@next/swc-linux-arm64-musl@12.1.1":
+  "integrity" "sha512-nxyjgmbOpZm7gGPj9EV5Cqosoujt+ih/8SO2XG+BetgfAk0+c15793DHVAljNuc8GF9wpzqQnjMMUZ211VmQsg=="
+  "resolved" "https://registry.npmjs.org/@next/swc-linux-arm64-musl/-/swc-linux-arm64-musl-12.1.1.tgz"
+  "version" "12.1.1"
+
+"@next/swc-linux-x64-gnu@12.1.1":
+  "integrity" "sha512-L8Cu8kH3Vn2dnRpvcvGGA1TlmDP2WXJ+qDwvjb/ikDXLdRdmFvJwHh45JUGiW2FHed3lGseOgNsuYiDvnT8Cdw=="
+  "resolved" "https://registry.npmjs.org/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-12.1.1.tgz"
+  "version" "12.1.1"
+
+"@next/swc-linux-x64-musl@12.1.1":
+  "integrity" "sha512-4RAb7L69MoRSggBqUfF3OrtBCUN2zPDi7asfL7bfxEhH10LGzyfil8dT0GVjPOPFz/SyLx3ORd6avGij2IlJUA=="
+  "resolved" "https://registry.npmjs.org/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-12.1.1.tgz"
+  "version" "12.1.1"
+
+"@next/swc-win32-arm64-msvc@12.1.1":
+  "integrity" "sha512-zvkuNIgOxkAU3RbzWRGCcFasDxWJdhONt2YeRGe39dJERHhEFA1u4HgaZw/SFE/kfrNRUZbXjJNAg3OU/EpPZw=="
+  "resolved" "https://registry.npmjs.org/@next/swc-win32-arm64-msvc/-/swc-win32-arm64-msvc-12.1.1.tgz"
+  "version" "12.1.1"
+
+"@next/swc-win32-ia32-msvc@12.1.1":
+  "integrity" "sha512-GsNDtZ//uKWNVjiwv3YKQYsDXuRWTz8jTmxopf5Ws3dK+zA77hn4o46LBQg0JPCNqTUO6eIOlUBjqSL6ejxmSQ=="
+  "resolved" "https://registry.npmjs.org/@next/swc-win32-ia32-msvc/-/swc-win32-ia32-msvc-12.1.1.tgz"
+  "version" "12.1.1"
+
 "@next/swc-win32-x64-msvc@12.1.1":
   "integrity" "sha512-nH5osn/uK9wsjT8Jh1YxMtRrkN5hoCNLQjsEdvfUfb+loQXeYiBd3n/0DUJkf6Scjfv6/htfUTPP3AEa7AbBxQ=="
   "resolved" "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-12.1.1.tgz"
@@ -1247,7 +1302,7 @@
   "resolved" "https://registry.npmjs.org/bech32/-/bech32-1.1.4.tgz"
   "version" "1.1.4"
 
-"bignumber.js@^9.0.1":
+"bignumber.js@^9.0.1", "bignumber.js@^9.0.2":
   "integrity" "sha512-GAcQvbpsM0pUb0zw1EI0KhQEZ+lRwR5fYaAp3vPOYuP7aDvGy6cVN6XHLauvF8SOga2y0dcLcjt3iQDTSEliyw=="
   "resolved" "https://registry.npmjs.org/bignumber.js/-/bignumber.js-9.0.2.tgz"
   "version" "9.0.2"
@@ -1459,6 +1514,7 @@
   dependencies:
     "anymatch" "~3.1.2"
     "braces" "~3.0.2"
+    "fsevents" "~2.3.2"
     "glob-parent" "~5.1.2"
     "is-binary-path" "~2.1.0"
     "is-glob" "~4.0.1"
@@ -2481,6 +2537,7 @@
   "resolved" "https://registry.npmjs.org/jsonfile/-/jsonfile-6.1.0.tgz"
   "version" "6.1.0"
   dependencies:
+    "graceful-fs" "^4.1.6"
     "universalify" "^2.0.0"
   optionalDependencies:
     "graceful-fs" "^4.1.6"
@@ -2671,6 +2728,18 @@
   "version" "12.1.1"
   dependencies:
     "@next/env" "12.1.1"
+    "@next/swc-android-arm-eabi" "12.1.1"
+    "@next/swc-android-arm64" "12.1.1"
+    "@next/swc-darwin-arm64" "12.1.1"
+    "@next/swc-darwin-x64" "12.1.1"
+    "@next/swc-linux-arm-gnueabihf" "12.1.1"
+    "@next/swc-linux-arm64-gnu" "12.1.1"
+    "@next/swc-linux-arm64-musl" "12.1.1"
+    "@next/swc-linux-x64-gnu" "12.1.1"
+    "@next/swc-linux-x64-musl" "12.1.1"
+    "@next/swc-win32-arm64-msvc" "12.1.1"
+    "@next/swc-win32-ia32-msvc" "12.1.1"
+    "@next/swc-win32-x64-msvc" "12.1.1"
     "caniuse-lite" "^1.0.30001283"
     "postcss" "8.4.5"
     "styled-jsx" "5.0.1"
@@ -3477,6 +3546,7 @@
   "resolved" "https://registry.npmjs.org/web-encoding/-/web-encoding-1.1.5.tgz"
   "version" "1.1.5"
   dependencies:
+    "@zxing/text-encoding" "0.9.0"
     "util" "^0.12.3"
   optionalDependencies:
     "@zxing/text-encoding" "0.9.0"

@@ -27,28 +27,35 @@ function Mint() {
   const filePickerRef = useRef(null)
 
   const Mint = async () => {
+    console.log('starting')
     if (loading) return
 
     setLoading(true)
 
+
     console.log(
       await nftCollection?.mint({
-        name: Name as string,
-        description: Description as string,
+        name: Name,
+        description: Description,
         image: selectedFile,
         properties: {},
       })
     )
     setLoading(false)
     setSelectedFile(null)
+    console.log('done')
   }
-  const addImageToPost = (e: any) => {
+  const addImageToPost = (e:any) => {
+
+    // console.log(e)
+    // setSelectedFile(e.target.files[0])
+
     const reader = new FileReader()
     if (e.target.files[0]) {
       reader.readAsDataURL(e.target.files[0])
     }
 
-    reader.onload = (readerEvent) => {
+    reader.onload = (readerEvent : any) => {
       setSelectedFile(readerEvent.target.result)
     }
   }
@@ -105,11 +112,11 @@ function Mint() {
               <div className="flex flex-col space-y-4">
                 <div className="flex items-center justify-between space-x-2 ">
                   <span className="w-full text-right font-semibold tracking-wide">Name</span>
-                  <input type="text" className="h-12 rounded ring-0 outline-none focus:ring-1 focus:ring-white bg-card-border px-2 text-lg font-medium " />
+                  <input type="text" onChange={(e) => setName(e.target.value)} className="h-12 rounded ring-0 outline-none focus:ring-1 focus:ring-white bg-card-border px-2 text-lg font-medium " />
                 </div>
                 <div className="flex items-center justify-between space-x-2 ">
                   <span className="w-full text-right font-semibold tracking-wide">Description</span>
-                  <input type="text" className="h-12 rounded ring-0 outline-none focus:ring-1 focus:ring-white bg-card-border px-2 text-lg font-medium " />
+                  <input type="text" onChange={(e) => setDescription(e.target.value)} className="h-12 rounded ring-0 outline-none focus:ring-1 focus:ring-white bg-card-border px-2 text-lg font-medium " />
                 </div>
               </div>
             </div>
