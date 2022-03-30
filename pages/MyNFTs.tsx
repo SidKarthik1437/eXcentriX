@@ -1,9 +1,12 @@
 import { useNFTCollection, useSDK } from '@thirdweb-dev/react'
 import { ThirdwebSDK } from '@thirdweb-dev/sdk'
 import { ethers } from 'ethers'
-import React, { useEffect, useState } from 'react'
+import React, { Component, useEffect, useState, Fragment } from 'react'
 import { useRecoilState } from 'recoil'
 import { constantState } from '../atoms/tw'
+import { PaperAirplaneIcon } from '@heroicons/react/outline'
+import { XCircleIcon } from '@heroicons/react/outline'
+import { Dialog, Transition } from '@headlessui/react'
 
 function MyNFTs() {
   const sdk = useSDK()
@@ -11,6 +14,9 @@ function MyNFTs() {
   const nftCollection = useNFTCollection(constants.collection)
   const marketplace = sdk?.getMarketplace(constants.market)
   const [myNFTs, setMyNFTs] = useState<any>([])
+
+  const [toAdd, setToAdd] = useState('')
+  const [open, setOpen] = useState<boolean>(false)
 
   const getMyNFTs = async () => {
     const nfts = await nftCollection?.getOwned().then((nfts) => {
@@ -20,6 +26,12 @@ function MyNFTs() {
       })
     })
     console.log(myNFTs)
+  }
+
+  const transfer = async (e: any) => {
+    let tokenId = e.target.id
+    console.log(tokenId)
+    await nftCollection?.transfer(toAdd, tokenId)
   }
 
   const createListing = async (e: any) => {
@@ -45,19 +57,19 @@ function MyNFTs() {
       reservePricePerToken: '1.5',
     }
 
-    // try {
-    //   const tx = await marketplace.auction.createListing(auction)
-    //   const receipt = tx.receipt // the transaction receipt
-    //   const listingId = tx.id // the id of the newly created listing
-    // } catch (err) {
-    //   console.log(err)
-    // }
+    try {
+      const tx = await marketplace?.auction.createListing(auction)
+      const receipt = tx.receipt // the transaction receipt
+      const listingId = tx.id // the id of the newly created listing
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
-    <div className="flex h-5/6 w-full select-none items-center justify-center">
-      <div className="mt-5 flex h-5/6 w-4/6 flex-col items-center space-y-1 space-x-1 rounded-xl border bg-bg px-1">
-        <div className="mx-5 mt-1 flex h-10 w-full items-center justify-between self-start text-lg text-white">
+    <div className="mt-14 flex h-screen w-full select-none items-center justify-center overflow-y-hidden">
+      <div className="mt-5 flex h-full w-full flex-col items-center space-y-1 space-x-1 bg-bg px-1 ">
+        <div className="mx-5 mt-1 flex h-10 w-full items-center justify-between self-start text-lg text-white ">
           <span className="">Your NFTs</span>
           <button
             onClick={() => getMyNFTs()}
@@ -65,25 +77,119 @@ function MyNFTs() {
           >
             GET
           </button>
+          <button
+            onClick={(e) => createListing(e)}
+            className="mr-10 rounded-lg bg-card-border px-4 text-bg"
+          >
+            Create Listing
+          </button>
         </div>
-        <div className="grid h-full w-full grid-cols-2 items-center space-y-1 space-x-1 overflow-y-scroll rounded-xl bg-bg p-5 pt-0 text-white scrollbar-thin scrollbar-thumb-card-border ">
-          {myNFTs.map((nft: any) => (
+        <div className="grid h-screen w-full grid-cols-5 items-center space-y-1 space-x-1 overflow-y-scroll rounded-xl bg-bg p-5 pt-0 text-white scrollbar-thin scrollbar-thumb-card-border ">
+          {myNFTs.map((nft: any, id: any) => (
             <div
-              key={nft.metadata.id}
-              className="flex h-[40rem] w-full flex-col items-center self-center rounded-xl border border-card-border bg-card-bg"
+            className="flex h-[30rem] w-full flex-col items-center self-center rounded-xl border border-card-border bg-card-bg"
+            key={nft.metadata.id}
+            id={id}
             >
               <img
                 src={nft.metadata.image}
                 alt=""
                 className="h-5/6 w-full flex-1 rounded-t-xl border-b border-b-white object-cover"
               />
-              <span>{nft.metadata.name}</span>
-              <span>{nft.metadata.description}</span>
-              <button type='button' key={ nft.metadata.id } onClick={(e:any) => createListing(e) }>List</button>
+              <div className="w-full border-b border-black shadow-lg">
+                <span>{nft.metadata.name}</span>
+                <span>{nft.metadata.description}</span>
+              </div>
+              <div className="flex h-10 w-full items-center justify-end p-1 shadow-lg">
+                <button
+                  className="h-8 w-8 rounded-full hover:bg-card-border "
+                  onClick={(e) => setOpen(true)}
+                >
+                  <PaperAirplaneIcon
+                    className="h-6 w-6 rotate-45 pl-1 pb-2"
+                    id={id}
+                  />
+                </button>
+              </div>
+              {/* <button
+                type="button"
+                key={nft.metadata.id}
+                onClick={(e: any) => createListing(e)}
+              >
+                List
+              </button> */}
             </div>
           ))}
         </div>
       </div>
+      <Transition.Root show={open} as={Fragment}>
+        <Dialog
+          as="div"
+          className="fixed inset-0 z-10 overflow-y-auto"
+          onClose={setOpen}
+        >
+          <div className="flex min-h-[800px] items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:min-h-screen sm:p-0">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+            </Transition.Child>
+            <span
+              className="hidden sm:inline-block sm:h-screen sm:align-middle"
+              aria-hidden="true"
+            >
+              &#8203;
+            </span>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enterTo="opacity-100 translate-y-0 sm:scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            >
+              <div className="inline-block transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle">
+                <div>
+                  <div>
+                    <div className="mt-3 text-center sm:mt-5">
+                      <Dialog.Title
+                        as="h3"
+                        className="text-lg font-medium leading-6 text-gray-900"
+                      >
+                        Enter Reciever's Address
+                      </Dialog.Title>
+                    </div>
+                    <div className="flex w-full justify-center">
+                      <input
+                        type="text"
+                        className="mt-4 h-10 w-full rounded border-2 border-blue-400 p-2 outline-none"
+                        placeholder="address"
+                      />
+                    </div>
+                    <div className="mt-4 flex justify-between">
+                      <button className="flex h-10 w-24 items-center justify-center rounded bg-red-500 text-white" onClick={() => setOpen(false) }>
+                        <span>Close</span>
+                        <XCircleIcon className="h-6 w-6 pl-1" />
+                      </button>
+                      <button className="flex h-10 w-24 items-center justify-center rounded bg-blue-500 text-white" onClick={(e) => transfer(e) }>
+                        <span>Transfer</span>
+                        <PaperAirplaneIcon className="h-6 w-6 rotate-45 pl-1 pb-2" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Transition.Child>
+          </div>
+        </Dialog>
+      </Transition.Root>
     </div>
   )
 }

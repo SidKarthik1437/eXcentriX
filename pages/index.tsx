@@ -19,13 +19,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      {address ? (
-        <div className="">
-          <Dashboard />
-          </div>
-      ): (<button onClick={()=>connectWithMetamask()}>
-        Connect Metamask
-      </button>)}
+      <Dashboard />
       
     </div>
   )

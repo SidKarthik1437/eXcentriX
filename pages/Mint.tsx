@@ -1,4 +1,4 @@
-import { useNFTCollection,useSDK } from '@thirdweb-dev/react'
+import { useNFTCollection, useSDK } from '@thirdweb-dev/react'
 import { ThirdwebSDK } from '@thirdweb-dev/sdk'
 import { ethers } from 'ethers'
 import React, { useRef, useState } from 'react'
@@ -32,21 +32,29 @@ function Mint() {
 
     setLoading(true)
 
+    
+      const tx : any = await nftCollection
+        ?.mint({
+          name: Name,
+          description: Description,
+          image: selectedFile,
+          properties: {},
+        })
+        .then((nft) => {
+          console.log('MINTEDD: ', nft)
+        })
+    
+    const receipt = tx.receipt 
+    const tokenId = tx.id 
+    const nft = await tx.data() 
 
-    console.log(
-      await nftCollection?.mint({
-        name: Name,
-        description: Description,
-        image: selectedFile,
-        properties: {},
-      })
-    )
+    console.log(receipt, tokenId, nft)
+    
     setLoading(false)
     setSelectedFile(null)
     console.log('done')
   }
-  const addImageToPost = (e:any) => {
-
+  const addImageToPost = (e: any) => {
     // console.log(e)
     // setSelectedFile(e.target.files[0])
 
@@ -55,7 +63,7 @@ function Mint() {
       reader.readAsDataURL(e.target.files[0])
     }
 
-    reader.onload = (readerEvent : any) => {
+    reader.onload = (readerEvent: any) => {
       setSelectedFile(readerEvent.target.result)
     }
   }
@@ -73,12 +81,16 @@ function Mint() {
             Mint
           </button>
         </div>
-        <div className="relative w-full h-full items-center">
-          <div className="flex absolute w-full justify-between items-center h-10 text-white max-w-3xl mx-auto top-20 left-52">
-            <span className="mb-20 text-xl font-semibold text-center">Image</span>
-            <span className="mb-20 text-xl font-semibold text-center">Details</span>
+        <div className="relative h-full w-full items-center">
+          <div className="absolute top-20 left-52 mx-auto flex h-10 w-full max-w-3xl items-center justify-between text-white">
+            <span className="mb-20 text-center text-xl font-semibold">
+              Image
+            </span>
+            <span className="mb-20 text-center text-xl font-semibold">
+              Details
+            </span>
           </div>
-          <div className="grid h-full w-full grid-cols-5 items-center justify-center space-y-4 text-white row-span-5">
+          <div className="row-span-5 grid h-full w-full grid-cols-5 items-center justify-center space-y-4 text-white">
             <div className="col-span-2 flex h-4/6 w-full flex-col items-center justify-around border-r">
               {selectedFile ? (
                 <div className=" flex h-5/6 w-5/6 items-center justify-center rounded-xl">
@@ -111,12 +123,24 @@ function Mint() {
             <div className="col-span-3 flex h-4/6 w-full  items-center justify-center">
               <div className="flex flex-col space-y-4">
                 <div className="flex items-center justify-between space-x-2 ">
-                  <span className="w-full text-right font-semibold tracking-wide">Name</span>
-                  <input type="text" onChange={(e) => setName(e.target.value)} className="h-12 rounded ring-0 outline-none focus:ring-1 focus:ring-white bg-card-border px-2 text-lg font-medium " />
+                  <span className="w-full text-right font-semibold tracking-wide">
+                    Name
+                  </span>
+                  <input
+                    type="text"
+                    onChange={(e) => setName(e.target.value)}
+                    className="h-12 rounded bg-card-border px-2 text-lg font-medium outline-none ring-0 focus:ring-1 focus:ring-white "
+                  />
                 </div>
                 <div className="flex items-center justify-between space-x-2 ">
-                  <span className="w-full text-right font-semibold tracking-wide">Description</span>
-                  <input type="text" onChange={(e) => setDescription(e.target.value)} className="h-12 rounded ring-0 outline-none focus:ring-1 focus:ring-white bg-card-border px-2 text-lg font-medium " />
+                  <span className="w-full text-right font-semibold tracking-wide">
+                    Description
+                  </span>
+                  <input
+                    type="text"
+                    onChange={(e) => setDescription(e.target.value)}
+                    className="h-12 rounded bg-card-border px-2 text-lg font-medium outline-none ring-0 focus:ring-1 focus:ring-white "
+                  />
                 </div>
               </div>
             </div>
