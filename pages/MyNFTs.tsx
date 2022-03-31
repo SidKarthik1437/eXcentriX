@@ -92,14 +92,14 @@ const createListing = async (e: any) => {
     // reservePricePerToken: '1.5',
   }
 
-  // try {
-  //   const tx = await marketplace?.direct.createListing(auction)
-  //   const receipt = tx?.receipt // the transaction receipt
-  //   const listingId = tx?.id // the id of the newly created listing
-  //   console.log(receipt, listingId)
-  // } catch (err) {
-  //   console.log(err)
-  // }
+  try {
+    const tx = await marketplace?.direct.createListing(auction)
+    const receipt = tx?.receipt // the transaction receipt
+    const listingId = tx?.id // the id of the newly created listing
+    console.log(receipt, listingId)
+  } catch (err) {
+    console.log(err)
+  }
   console.log('NFT Listed!')
 }
 
