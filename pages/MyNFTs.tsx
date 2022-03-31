@@ -1,12 +1,13 @@
-import { useNFTCollection, useSDK } from '@thirdweb-dev/react'
+import { useAddress, useNFTCollection, useSDK } from '@thirdweb-dev/react'
 import { ThirdwebSDK } from '@thirdweb-dev/sdk'
 import { ethers } from 'ethers'
 import React, { Component, useEffect, useState, Fragment } from 'react'
 import { useRecoilState } from 'recoil'
 import { constantState } from '../atoms/tw'
-import { PaperAirplaneIcon } from '@heroicons/react/outline'
+import { PaperAirplaneIcon, ScaleIcon } from '@heroicons/react/outline'
 import { XCircleIcon } from '@heroicons/react/outline'
 import { Dialog, Transition } from '@headlessui/react'
+import NFT from '../components/NFT'
 
 function MyNFTs() {
   const sdk = useSDK()
@@ -14,61 +15,98 @@ function MyNFTs() {
   const nftCollection = useNFTCollection(constants.collection)
   const marketplace = sdk?.getMarketplace(constants.market)
   const [myNFTs, setMyNFTs] = useState<any>([])
+  const [tempNFTs, setTempNFTs] = useState<any>([])
+  const [final, setFinal] = useState<any>([])
 
   const [toAdd, setToAdd] = useState('')
   const [open, setOpen] = useState<boolean>(false)
 
   const getMyNFTs = async () => {
+    const allNfts = await nftCollection?.getAll().then((nfts) => {
+      setTempNFTs(nfts)
+    })
+    console.log(tempNFTs)
     const nfts = await nftCollection?.getOwned().then((nfts) => {
       setMyNFTs(nfts)
+      // console.log(nfts)
       nfts.map((nft: any) => {
-        console.log(nft.metadata.id)
+        // console.log(nft.metadata.id)
+        // console.log(nft.getAddress())
       })
     })
-    console.log(myNFTs)
+  }
+
+  const address = useAddress()
+  const Filter = () => {
+
+
+    // myNFTs.forEach((element: any, id: any) => {
+    tempNFTs.forEach((ele: any, i: any) => {
+        if (ele.owner == address) {
+          // console.log(ele)
+          let list = final.concat({ id: i, nft: ele})
+          setFinal(list)
+          // console.log(final)
+        }
+      })
+    // })
+
+
+    
+  }
+
+  const Burn = async () => {
+    const tokenId = 0
+
+    await nftCollection?.burn(tokenId).then((res:any) => {
+      console.log('burn successful', res)
+    })
   }
 
   const transfer = async (e: any) => {
-    let tokenId = e.target.id
+    let tokenId = e
     console.log(tokenId)
     await nftCollection?.transfer(toAdd, tokenId)
   }
-
-  const createListing = async (e: any) => {
-    console.log(e.target.key)
-    const auction = {
-      // address of the contract the asset you want to list is on
-      assetContractAddress: constants.collection,
-      // token ID of the asset you want to list
-      tokenId: '0',
-      // in how many seconds with the listing open up
-      startTimeInSeconds: 0,
-      // how long the listing will be open for
-      listingDurationInSeconds: 86400,
-      // how many of the asset you want to list
-      quantity: 1,
-      // address of the currency contract that will be used to pay for the listing
-      // use NATIVE_TOKEN_ADDRESS or don't pass currencyContractAddress to use
-      // the native token of the chain, (ETH for Ethereum, MATIC for Polygon, etc.)
-      currencyContractAddress: constants.token,
-      // how much people would have to bid to instantly buy the asset
-      buyoutPricePerToken: '10',
-      // the minimum bid that will be accepted for the token
-      reservePricePerToken: '1.5',
-    }
-
-    try {
-      const tx = await marketplace?.auction.createListing(auction)
-      const receipt = tx.receipt // the transaction receipt
-      const listingId = tx.id // the id of the newly created listing
-    } catch (err) {
-      console.log(err)
-    }
+const createListing = async (e: any) => {
+  console.log(e.target.id)
+  console.log('Starting to List NFT')
+  const auction = {
+    // address of the contract the asset you want to list is on
+    assetContractAddress: constants.collection,
+    // token ID of the asset you want to list
+    tokenId: e.target.id,
+    // in how many seconds with the listing open up
+    startTimeInSeconds: 0,
+    // how long the listing will be open for
+    listingDurationInSeconds: 86400,
+    // how many of the asset you want to list
+    quantity: 1,
+    // address of the currency contract that will be used to pay for the listing
+    // use NATIVE_TOKEN_ADDRESS or don't pass currencyContractAddress to use
+    // the native token of the chain, (ETH for Ethereum, MATIC for Polygon, etc.)
+    currencyContractAddress: constants.token,
+    // how much people would have to bid to instantly buy the asset
+    buyoutPricePerToken: '10',
+    // the minimum bid that will be accepted for the token
+    // reservePricePerToken: '1.5',
   }
 
+  // try {
+  //   const tx = await marketplace?.direct.createListing(auction)
+  //   const receipt = tx?.receipt // the transaction receipt
+  //   const listingId = tx?.id // the id of the newly created listing
+  //   console.log(receipt, listingId)
+  // } catch (err) {
+  //   console.log(err)
+  // }
+  console.log('NFT Listed!')
+}
+
+  
   return (
     <div className="mt-14 flex h-screen w-full select-none items-center justify-center overflow-y-hidden">
-      <div className="mt-5 flex h-full w-full flex-col items-center space-y-1 space-x-1 bg-bg px-1 ">
+      <div className="mt flex h-full w-full flex-col items-center space-y-1 space-x-1 bg-bg px-1 ">
         <div className="mx-5 mt-1 flex h-10 w-full items-center justify-between self-start text-lg text-white ">
           <span className="">Your NFTs</span>
           <button
@@ -78,6 +116,18 @@ function MyNFTs() {
             GET
           </button>
           <button
+            onClick={() => Burn()}
+            className="mr-10 rounded-lg bg-card-border px-4 text-bg"
+          >
+            Burn
+          </button>
+          <button
+            onClick={() => Filter()}
+            className="mr-10 rounded-lg bg-card-border px-4 text-bg"
+          >
+            Filter
+          </button>
+          <button
             onClick={(e) => createListing(e)}
             className="mr-10 rounded-lg bg-card-border px-4 text-bg"
           >
@@ -85,41 +135,13 @@ function MyNFTs() {
           </button>
         </div>
         <div className="grid h-screen w-full grid-cols-5 items-center space-y-1 space-x-1 overflow-y-scroll rounded-xl bg-bg p-5 pt-0 text-white scrollbar-thin scrollbar-thumb-card-border ">
-          {myNFTs.map((nft: any, id: any) => (
-            <div
-            className="flex h-[30rem] w-full flex-col items-center self-center rounded-xl border border-card-border bg-card-bg"
-            key={nft.metadata.id}
-            id={id}
-            >
-              <img
-                src={nft.metadata.image}
-                alt=""
-                className="h-5/6 w-full flex-1 rounded-t-xl border-b border-b-white object-cover"
-              />
-              <div className="w-full border-b border-black shadow-lg">
-                <span>{nft.metadata.name}</span>
-                <span>{nft.metadata.description}</span>
-              </div>
-              <div className="flex h-10 w-full items-center justify-end p-1 shadow-lg">
-                <button
-                  className="h-8 w-8 rounded-full hover:bg-card-border "
-                  onClick={(e) => setOpen(true)}
-                >
-                  <PaperAirplaneIcon
-                    className="h-6 w-6 rotate-45 pl-1 pb-2"
-                    id={id}
-                  />
-                </button>
-              </div>
-              {/* <button
-                type="button"
-                key={nft.metadata.id}
-                onClick={(e: any) => createListing(e)}
-              >
-                List
-              </button> */}
-            </div>
-          ))}
+          {tempNFTs.map((nft: any, id: any) => {
+            if (nft.owner === address) {
+              console.log(id, nft)
+              return (
+                <NFT nft={nft} key={id} id={id}/>
+              )}
+          })}
         </div>
       </div>
       <Transition.Root show={open} as={Fragment}>
@@ -174,11 +196,17 @@ function MyNFTs() {
                       />
                     </div>
                     <div className="mt-4 flex justify-between">
-                      <button className="flex h-10 w-24 items-center justify-center rounded bg-red-500 text-white" onClick={() => setOpen(false) }>
+                      <button
+                        className="flex h-10 w-24 items-center justify-center rounded bg-red-500 text-white"
+                        onClick={() => setOpen(false)}
+                      >
                         <span>Close</span>
                         <XCircleIcon className="h-6 w-6 pl-1" />
                       </button>
-                      <button className="flex h-10 w-24 items-center justify-center rounded bg-blue-500 text-white" onClick={(e) => transfer(e) }>
+                      <button
+                        className="flex h-10 w-24 items-center justify-center rounded bg-blue-500 text-white"
+                        onClick={(e) => transfer(e)}
+                      >
                         <span>Transfer</span>
                         <PaperAirplaneIcon className="h-6 w-6 rotate-45 pl-1 pb-2" />
                       </button>

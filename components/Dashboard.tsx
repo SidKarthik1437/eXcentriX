@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { ThirdwebSDK } from '@thirdweb-dev/sdk'
-import { ethers } from 'ethers'
+import { BigNumberish, ethers } from 'ethers'
 import { useAddress, useNFTCollection } from '@thirdweb-dev/react'
 import Header from './Header'
 import { useRecoilState } from 'recoil'
 import { constantState } from '../atoms/tw.js'
+import { ShoppingBagIcon } from '@heroicons/react/outline'
 
 const sdk = new ThirdwebSDK(
   new ethers.Wallet(
@@ -14,31 +15,74 @@ const sdk = new ThirdwebSDK(
     )
   )
 )
-    
-
-const marketplace = sdk.getMarketplace(
-  '0xdEfa05F51C564041B9437Ec429eceAe8DA2E0A12'
-)
-const token = '0x5d41c00d651e2bFfa6e8b58f10A01D4e36ebE384'
-const collection = '0x552d2aA38338982E642EF04b4c11Cf433B21798b'
 
 function Dashboard() {
+  const [constants] = useRecoilState(constantState)
+  const [listings, setListings] = useState<any>()
 
-  
-  
-  const address = useAddress()
-  
+  const marketplace = sdk.getMarketplace(constants.market)
 
-  
+
+  useEffect(() => {
+    const getAllListings = async () => {
+      try {
+        await marketplace.getAllListings().then((listings) => { 
+          console.log(listings)
+          setListings(listings)
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getAllListings()
+  }, [])
+
+  const buyOut = async (e: any) => {
+    console.log(e.target.id)
+    console.log('commencing purchase')
+    let listingId = e.target.id;
+    const quantityDesired = 1;
+    
+    await marketplace.buyoutListing(1, quantityDesired);
+    console.log('listing purchased!')
+  }
+
   return (
-    <div className="flex flex-col space-x-2">
-      <div className="flex flex-col space-x-2">
-        <span className=''>
-        Your NFTS:
-          
-      </span>
-        
+    <div className="mt-14 flex h-screen w-full select-none items-center justify-center overflow-y-hidden">
+      <div className="mt flex h-screen w-full flex-col items-center space-y-1 space-x-1 bg-bg px-1 ">
+        <div className="grid h-screen w-full grid-cols-5 items-center space-y-1 space-x-1 overflow-y-scroll rounded-xl bg-bg p-5 pt-0 text-white scrollbar-thin scrollbar-thumb-card-border ">
+          {listings?.map((listing: any, id: any) => (
+            <div
+              className="flex h-4/6 w-full flex-col items-center self-center rounded-xl border border-card-border bg-card-bg cols-span-1"
+              key={listing.id}
+              id={id}
+            >
+              <img
+                src={listing.asset.image}
+                alt="nft image"
+                className="h-4/6 w-full flex-1 rounded-t-xl border-b border-b-white object-cover"
+              />
+              <div className="w-full shadow-xl flex flex-col px-1">
+                <span className='text-lg'>{listing.asset.name}</span>
+                <span className='text-md text-gray-400'>{listing.asset.description}</span>
+              </div>
+              <div className="w-full shadow-xl flex flex-col px-1">
+                <span className='text-lg'>{listing.asset.name}</span>
+                <span className='text-md text-gray-400'>{listing.asset.description}</span>
+              </div>
+                <button
+                  type="button"
+                  id={listing.id}
+                  onClick={(e: any) => buyOut(e)}
+                  className="h-8 w-8 rounded-full hover:bg-card-border "
+                >
+                  <ShoppingBagIcon className="ml-1 h-6 w-6 p-1" id={id} />
+                </button>
+            </div>
+          ))}
+        </div>
       </div>
+      
     </div>
   )
 }

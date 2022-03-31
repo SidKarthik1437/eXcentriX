@@ -24,7 +24,7 @@ function Mint() {
   const [selectedFile, setSelectedFile] = useState(null)
 
   const [loading, setLoading] = useState(false)
-  const filePickerRef = useRef(null)
+  const filePickerRef = useRef<any>(null)
 
   const Mint = async () => {
     console.log('starting')
@@ -70,7 +70,7 @@ function Mint() {
   console.log(selectedFile)
 
   return (
-    <div className="flex h-5/6 w-full items-center justify-center">
+    <div className="flex h-full w-full items-center justify-center">
       <div className="flex h-5/6 w-5/6 flex-col rounded-xl border border-white">
         <div className="mx-5 mt-1 flex h-10 w-full items-center justify-between self-start text-lg text-white">
           <span className="text-xl">Mint an NFT</span>
