@@ -1,4 +1,4 @@
-import { useAddress, useNFTCollection, useSDK } from '@thirdweb-dev/react'
+import { useAddress, useMarketplace, useNFTCollection, useSDK } from '@thirdweb-dev/react'
 import { ThirdwebSDK } from '@thirdweb-dev/sdk'
 import { ethers } from 'ethers'
 import React, { Component, useEffect, useState, Fragment } from 'react'
@@ -10,10 +10,10 @@ import { Dialog, Transition } from '@headlessui/react'
 import NFT from '../components/NFT'
 
 function MyNFTs() {
-  const sdk = useSDK()
   const [constants] = useRecoilState(constantState)
+  const sdk = useSDK()
+  const marketplace = useMarketplace(constants.market)
   const nftCollection = useNFTCollection(constants.collection)
-  const marketplace = sdk?.getMarketplace(constants.market)
   const [myNFTs, setMyNFTs] = useState<any>([])
   const [tempNFTs, setTempNFTs] = useState<any>([])
   const [final, setFinal] = useState<any>([])
@@ -38,27 +38,22 @@ function MyNFTs() {
 
   const address = useAddress()
   const Filter = () => {
-
-
     // myNFTs.forEach((element: any, id: any) => {
     tempNFTs.forEach((ele: any, i: any) => {
-        if (ele.owner == address) {
-          // console.log(ele)
-          let list = final.concat({ id: i, nft: ele})
-          setFinal(list)
-          // console.log(final)
-        }
-      })
+      if (ele.owner == address) {
+        // console.log(ele)
+        let list = final.concat({ id: i, nft: ele })
+        setFinal(list)
+        // console.log(final)
+      }
+    })
     // })
-
-
-    
   }
 
   const Burn = async () => {
     const tokenId = 0
 
-    await nftCollection?.burn(tokenId).then((res:any) => {
+    await nftCollection?.burn(tokenId).then((res: any) => {
       console.log('burn successful', res)
     })
   }
@@ -68,46 +63,41 @@ function MyNFTs() {
     console.log(tokenId)
     await nftCollection?.transfer(toAdd, tokenId)
   }
-const createListing = async (e: any) => {
-  console.log(e.target.id)
-  console.log('Starting to List NFT')
-  const auction = {
-    // address of the contract the asset you want to list is on
-    assetContractAddress: constants.collection,
-    // token ID of the asset you want to list
-    tokenId: e.target.id,
-    // in how many seconds with the listing open up
-    startTimeInSeconds: 0,
-    // how long the listing will be open for
-    listingDurationInSeconds: 86400,
-    // how many of the asset you want to list
-    quantity: 1,
-    // address of the currency contract that will be used to pay for the listing
-    // use NATIVE_TOKEN_ADDRESS or don't pass currencyContractAddress to use
-    // the native token of the chain, (ETH for Ethereum, MATIC for Polygon, etc.)
-    currencyContractAddress: constants.token,
-    // how much people would have to bid to instantly buy the asset
-    buyoutPricePerToken: '10',
-    // the minimum bid that will be accepted for the token
-    // reservePricePerToken: '1.5',
+  const createListing = async (e: any) => {
+    console.log(e.target.id)
+    console.log('Starting to List NFT')
+    const listing = {
+      // address of the NFT contract the asset you want to list is on
+      assetContractAddress: constants.collection,
+      // token ID of the asset you want to list
+      tokenId: e.target.id,
+      // in how many seconds will the listing open up
+      startTimeInSeconds: 0,
+      // how long the listing will be open for
+      listingDurationInSeconds: 86400,
+      // how many of the asset you want to list
+      quantity: 1,
+      // address of the currency contract that will be used to pay for the listing
+      currencyContractAddress: constants.token,
+      // how much the asset will be sold for
+      buyoutPricePerToken: '1.5',
+    }
+
+    try {
+      const tx = await marketplace?.direct.createListing(listing)
+      const receipt = tx?.receipt // the transaction receipt
+      const listingId = tx?.id // the id of the newly created listing
+      console.log(receipt, listingId)
+    } catch (err) {
+      console.log(err)
+    }
+    console.log('NFT Listed!')
   }
 
-  try {
-    const tx = await marketplace?.direct.createListing(auction)
-    const receipt = tx?.receipt // the transaction receipt
-    const listingId = tx?.id // the id of the newly created listing
-    console.log(receipt, listingId)
-  } catch (err) {
-    console.log(err)
-  }
-  console.log('NFT Listed!')
-}
-
-  
   return (
-    <div className="mt-14 flex h-screen w-full select-none items-center justify-center overflow-y-hidden">
-      <div className="mt flex h-full w-full flex-col items-center space-y-1 space-x-1 bg-bg px-1 ">
-        <div className="mx-5 mt-1 flex h-10 w-full items-center justify-between self-start text-lg text-white ">
+    <div className="mt-14 flex h-screen w-full select-none items-center justify-center overflow-x-hidden overflow-y-hidden pb-14">
+      <div className="flex h-full w-full flex-col items-center space-y-1 space-x-1 overflow-x-hidden overflow-y-hidden bg-bg px-1">
+        <div className="mx-5 mt-1 flex h-10 w-full items-center justify-between self-start overflow-y-hidden text-lg text-white">
           <span className="">Your NFTs</span>
           <button
             onClick={() => getMyNFTs()}
@@ -138,9 +128,8 @@ const createListing = async (e: any) => {
           {tempNFTs.map((nft: any, id: any) => {
             if (nft.owner === address) {
               console.log(id, nft)
-              return (
-                <NFT nft={nft} key={id} id={id}/>
-              )}
+              return <NFT nft={nft} key={id} id={id} />
+            }
           })}
         </div>
       </div>

@@ -44,11 +44,11 @@ function Mint() {
           console.log('MINTEDD: ', nft)
         })
     
-    const receipt = tx.receipt 
-    const tokenId = tx.id 
-    const nft = await tx.data() 
+    // const receipt = tx.receipt 
+    // const tokenId = tx.id 
+    // const nft = await tx.data() 
 
-    console.log(receipt, tokenId, nft)
+    // console.log(receipt, tokenId, nft)
     
     setLoading(false)
     setSelectedFile(null)

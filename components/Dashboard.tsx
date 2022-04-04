@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ThirdwebSDK } from '@thirdweb-dev/sdk'
 import { BigNumberish, ethers } from 'ethers'
-import { useAddress, useNFTCollection } from '@thirdweb-dev/react'
+import { useAddress, useMarketplace } from '@thirdweb-dev/react'
 import Header from './Header'
 import { useRecoilState } from 'recoil'
 import { constantState } from '../atoms/tw.js'
@@ -20,13 +20,13 @@ function Dashboard() {
   const [constants] = useRecoilState(constantState)
   const [listings, setListings] = useState<any>()
 
-  const marketplace = sdk.getMarketplace(constants.market)
+  const marketplace = useMarketplace(constants.market)
 
   // useEffect(() => {
   const getAllListings = async () => {
     // setListings(null)
     try {
-      await marketplace.getActiveListings().then((listings) => {
+      await marketplace?.getActiveListings().then((listings) => {
         console.log(listings)
         setListings(listings)
       })
@@ -42,7 +42,7 @@ function Dashboard() {
     let listingId = e.target.id
     const quantityDesired = 1
 
-    await marketplace.buyoutListing(listingId, quantityDesired)
+    await marketplace?.direct.buyoutListing(0, quantityDesired)
   }
 
   return (

@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
       <ThirdwebProvider desiredChainId={desiredChainId}>
-        <div className="w-full h-screen bg-bg">
+        <div className="h-screen w-full overflow-y-hidden overflow-x-hidden bg-bg">
           <Header />
           <Component {...pageProps} />
         </div>

@@ -13,14 +13,13 @@ const Home: NextPage = () => {
   console.log(address)
 
   return (
-    <div className="w-full h-screen bg-bg">
+    <div className="h-screen w-full overflow-y-hidden overflow-x-hidden bg-bg">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
+
       <Dashboard />
-      
     </div>
   )
 }
