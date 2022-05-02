@@ -95,7 +95,7 @@ function MyNFTs() {
   }
 
   return (
-    <div className="mt-14 flex h-screen w-full select-none items-center justify-center overflow-x-hidden overflow-y-hidden pb-14">
+    <div className="mt-14 flex h-screen w-full pl-20 select-none items-center justify-center overflow-x-hidden overflow-y-hidden pb-14">
       <div className="flex h-full w-full flex-col items-center space-y-1 space-x-1 overflow-x-hidden overflow-y-hidden bg-bg px-1">
         <div className="mx-5 mt-1 flex h-10 w-full items-center justify-between self-start overflow-y-hidden text-lg text-white">
           <span className="">Your NFTs</span>

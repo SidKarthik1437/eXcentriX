@@ -46,20 +46,31 @@ function NFT({ nft, id }: any) {
 
   return (
     <div
-      className="flex h-[25rem] w-full flex-col items-center self-center rounded-xl border border-card-border bg-card-bg"
+      className="flex h-[25rem] w-5/6 flex-col items-center self-center rounded-xl border border-bright bg-gradient-to-r from-light to-card-border"
       key={nft.metadata.id}
       id={id}
     >
-      <div className="flex w-full h-4/6 items-center justify-center">
+      <div className="flex h-4/6 w-full items-center justify-center">
         <img
           src={nft.metadata.image}
           alt=""
           className="h-5/6 w-5/6 rounded-tl-3xl rounded-br-3xl object-cover"
         />
       </div>
-      <div className="flex w-full ml-12">
-        <span className="font-bold">{nft.metadata.name}</span>
+      <div className="ml-8 pl-2 flex w-full self-start">
+        <span className="text-xl font-bold tracking-widest">
+          {nft.metadata.name}
+        </span>
         {/* <span className="font-bold">{nft.metadata.description}</span> */}
+      </div>
+      <div className="ml-8 mt-2 flex w-4/6 h-16 pl-2 items-center self-start rounded hover:bg-gradient-to-l hover:bg-opacity-60 from-light to-card-border hover:shadow-xl">
+        <img
+          src="https://i.imgur.com/FJjRLVp.jpg"
+          className="h-12 w-12 rounded object-cover"
+        />
+        <div>
+          <span className="ml-2 text-lg font-semibold">excentrix</span>
+        </div>
       </div>
       <div className="flex h-10 w-full items-center justify-end p-1 ">
         {/* <button
@@ -75,7 +86,7 @@ function NFT({ nft, id }: any) {
           type="button"
           id={id}
           onClick={(e: any) => createListing(e)}
-          className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-card-border"
+          className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-bright"
         >
           <ScaleIcon className=" h-6 w-6" id={id} />
         </button>
