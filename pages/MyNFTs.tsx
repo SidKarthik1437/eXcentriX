@@ -124,7 +124,7 @@ function MyNFTs() {
             Create Listing
           </button>
         </div>
-        <div className="grid h-screen w-full grid-cols-5 items-center space-y-1 space-x-1 overflow-y-scroll rounded-xl bg-bg p-5 pt-0 text-white scrollbar-thin scrollbar-thumb-card-border ">
+        <div className="grid h-screen w-full grid-cols-4 items-center space-y-1 space-x-1 overflow-y-scroll rounded-xl bg-bg p-5 pt-0 text-white scrollbar-thin scrollbar-thumb-card-border ">
           {tempNFTs.map((nft: any, id: any) => {
             if (nft.owner === address) {
               console.log(id, nft)

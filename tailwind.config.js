@@ -6,10 +6,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        bg: '#0f172a',
+        bg: '#171629',
         card: {
-          bg: '#1e293b',
-          border: '#94a3b8',
+          bg: '#25203F',
+          border: '#50336C',
         },
       },
     },

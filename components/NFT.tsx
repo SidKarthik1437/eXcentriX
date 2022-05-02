@@ -5,11 +5,10 @@ import { useRecoilState } from 'recoil'
 import { constantState } from '../atoms/tw'
 
 function NFT({ nft, id }: any) {
-  
   const sdk = useSDK()
   const [constants] = useRecoilState(constantState)
   const marketplace = sdk?.getMarketplace(constants.market)
-  
+
   const createListing = async (e: any) => {
     console.log(e.target.id)
     console.log('Starting to List NFT')
@@ -47,21 +46,23 @@ function NFT({ nft, id }: any) {
 
   return (
     <div
-              className="flex h-[30rem] w-full flex-col items-center self-center rounded-xl border border-card-border bg-card-bg"
-              key={nft.metadata.id}
-              id={id}
-            >
-              <img
-                src={nft.metadata.image}
-                alt=""
-                className="h-5/6 w-full flex-1 rounded-t-xl border-b border-b-white object-cover"
-              />
-              <div className="w-full shadow-xl">
-                <span>{nft.metadata.name}</span>
-                <span>{nft.metadata.description}</span>
-              </div>
-              <div className="flex h-10 w-full items-center justify-end p-1 ">
-                {/* <button
+      className="flex h-[25rem] w-full flex-col items-center self-center rounded-xl border border-card-border bg-card-bg"
+      key={nft.metadata.id}
+      id={id}
+    >
+      <div className="flex w-full h-4/6 items-center justify-center">
+        <img
+          src={nft.metadata.image}
+          alt=""
+          className="h-5/6 w-5/6 rounded-tl-3xl rounded-br-3xl object-cover"
+        />
+      </div>
+      <div className="flex w-full ml-12">
+        <span className="font-bold">{nft.metadata.name}</span>
+        {/* <span className="font-bold">{nft.metadata.description}</span> */}
+      </div>
+      <div className="flex h-10 w-full items-center justify-end p-1 ">
+        {/* <button
                   className="h-8 w-8 rounded-full hover:bg-card-border "
                   onClick={(e) => setOpen(true)}
                 >
@@ -70,16 +71,16 @@ function NFT({ nft, id }: any) {
                     id={id}
                   />
                 </button> */}
-                <button
-                  type="button"
-                  id={id}
-                  onClick={(e: any) => createListing(e)}
-                  className="flex h-8 w-8 rounded-full hover:bg-card-border items-center justify-center"
-                >
-                  <ScaleIcon className=" h-6 w-6" id={id} />
-                </button>
-              </div>
-            </div>
+        <button
+          type="button"
+          id={id}
+          onClick={(e: any) => createListing(e)}
+          className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-card-border"
+        >
+          <ScaleIcon className=" h-6 w-6" id={id} />
+        </button>
+      </div>
+    </div>
   )
 }
 

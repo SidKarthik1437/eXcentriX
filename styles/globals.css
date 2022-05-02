@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 @font-face {
     font-family:ca;
     src: url(28\ Days\ Later.ttf);
@@ -9,5 +10,10 @@
 
 .fonta {
     font-family:ca;
+    color:white;
+}
+
+.fontp{
+    font-family: 'Poppins', sans-serif;
     color:white;
 }
