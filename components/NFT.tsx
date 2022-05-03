@@ -46,7 +46,7 @@ function NFT({ nft, id }: any) {
 
   return (
     <div
-      className="flex h-[25rem] w-5/6 flex-col items-center self-center rounded-xl border border-bright bg-gradient-to-r from-light to-card-border"
+      className="flex h-[25rem] w-5/6 flex-col items-center self-center rounded-xl border border-bright bg-gradient-to-r from-light to-card-border hover:-translate-y-2 transition-all duration-300 ease-in-out"
       key={nft.metadata.id}
       id={id}
     >
@@ -54,7 +54,7 @@ function NFT({ nft, id }: any) {
         <img
           src={nft.metadata.image}
           alt=""
-          className="h-5/6 w-5/6 rounded-tl-3xl rounded-br-3xl object-cover"
+          className="h-5/6 w-5/6 rounded-tl-3xl rounded-br-3xl rounded-bl rounded-tr object-cover shadow-lg hover:scale-105 transition-all duration-100 ease-out"
         />
       </div>
       <div className="ml-8 pl-2 flex w-full self-start">

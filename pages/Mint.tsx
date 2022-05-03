@@ -32,24 +32,23 @@ function Mint() {
 
     setLoading(true)
 
-    
-      const tx : any = await nftCollection
-        ?.mint({
-          name: Name,
-          description: Description,
-          image: selectedFile,
-          properties: {},
-        })
-        .then((nft) => {
-          console.log('MINTEDD: ', nft)
-        })
-    
-    // const receipt = tx.receipt 
-    // const tokenId = tx.id 
-    // const nft = await tx.data() 
+    const tx: any = await nftCollection
+      ?.mint({
+        name: Name,
+        description: Description,
+        image: selectedFile,
+        properties: {},
+      })
+      .then((nft) => {
+        console.log('MINTEDD: ', nft)
+      })
+
+    // const receipt = tx.receipt
+    // const tokenId = tx.id
+    // const nft = await tx.data()
 
     // console.log(receipt, tokenId, nft)
-    
+
     setLoading(false)
     setSelectedFile(null)
     console.log('done')
@@ -73,10 +72,10 @@ function Mint() {
     <div className="flex h-full w-full items-center justify-center">
       <div className="flex h-5/6 w-5/6 flex-col rounded-xl border border-white">
         <div className="mx-5 mt-1 flex h-10 w-full items-center justify-between self-start text-lg text-white">
-          <span className="text-xl">Mint an NFT</span>
+          <span className="text-xl text-white">Mint an NFT</span>
           <button
             onClick={() => Mint()}
-            className="mr-10 rounded-lg bg-card-border px-4 font-semibold text-bg"
+            className="mr-10 rounded-lg bg-card-border px-4 font-semibold text-white"
           >
             Mint
           </button>
@@ -129,7 +128,7 @@ function Mint() {
                   <input
                     type="text"
                     onChange={(e) => setName(e.target.value)}
-                    className="h-12 rounded bg-card-border px-2 text-lg font-medium outline-none ring-0 focus:ring-1 focus:ring-white "
+                    className="h-12 rounded bg-card-border px-2 text-lg font-semibold outline-none ring-0 focus:ring-1 focus:ring-white "
                   />
                 </div>
                 <div className="flex items-center justify-between space-x-2 ">
@@ -139,7 +138,7 @@ function Mint() {
                   <input
                     type="text"
                     onChange={(e) => setDescription(e.target.value)}
-                    className="h-12 rounded bg-card-border px-2 text-lg font-medium outline-none ring-0 focus:ring-1 focus:ring-white "
+                    className="h-12 rounded bg-card-border px-2 text-lg font-semibold outline-none ring-0 focus:ring-1 focus:ring-white "
                   />
                 </div>
               </div>

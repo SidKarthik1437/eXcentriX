@@ -98,28 +98,28 @@ function MyNFTs() {
     <div className="mt-14 flex h-screen w-full pl-20 select-none items-center justify-center overflow-x-hidden overflow-y-hidden pb-14">
       <div className="flex h-full w-full flex-col items-center space-y-1 space-x-1 overflow-x-hidden overflow-y-hidden bg-bg px-1">
         <div className="mx-5 mt-1 flex h-10 w-full items-center justify-between self-start overflow-y-hidden text-lg text-white">
-          <span className="">Your NFTs</span>
+          <span className="text-white">Your NFTs</span>
           <button
             onClick={() => getMyNFTs()}
-            className="mr-10 rounded-lg bg-card-border px-4 text-bg"
+            className="mr-10 rounded-lg bg-card-border px-4 text-white"
           >
             GET
           </button>
           <button
             onClick={() => Burn()}
-            className="mr-10 rounded-lg bg-card-border px-4 text-bg"
+            className="mr-10 rounded-lg bg-card-border px-4 text-white"
           >
             Burn
           </button>
           <button
             onClick={() => Filter()}
-            className="mr-10 rounded-lg bg-card-border px-4 text-bg"
+            className="mr-10 rounded-lg bg-card-border px-4 text-white"
           >
             Filter
           </button>
           <button
             onClick={(e) => createListing(e)}
-            className="mr-10 rounded-lg bg-card-border px-4 text-bg"
+            className="mr-10 rounded-lg bg-card-border px-4 text-white"
           >
             Create Listing
           </button>
