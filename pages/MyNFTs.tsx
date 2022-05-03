@@ -1,4 +1,9 @@
-import { useAddress, useMarketplace, useNFTCollection, useSDK } from '@thirdweb-dev/react'
+import {
+  useAddress,
+  useMarketplace,
+  useNFTCollection,
+  useSDK,
+} from '@thirdweb-dev/react'
 import { ThirdwebSDK } from '@thirdweb-dev/sdk'
 import { ethers } from 'ethers'
 import React, { Component, useEffect, useState, Fragment } from 'react'
@@ -95,9 +100,9 @@ function MyNFTs() {
   }
 
   return (
-    <div className="mt-14 flex h-screen w-full pl-20 select-none items-center justify-center overflow-x-hidden overflow-y-hidden pb-14">
+    <div className="mt-14 flex h-screen w-full select-none items-center justify-center overflow-x-hidden overflow-y-hidden pb-14 md:pl-20">
       <div className="flex h-full w-full flex-col items-center space-y-1 space-x-1 overflow-x-hidden overflow-y-hidden bg-bg px-1">
-        <div className="mx-5 mt-1 flex h-10 w-full items-center justify-between self-start overflow-y-hidden text-lg text-white">
+        <div className="mx-5 mt-1 hidden h-10 w-full items-center justify-between self-start overflow-y-hidden text-lg text-white md:flex">
           <span className="text-white">Your NFTs</span>
           <button
             onClick={() => getMyNFTs()}
@@ -124,7 +129,7 @@ function MyNFTs() {
             Create Listing
           </button>
         </div>
-        <div className="grid h-screen w-full grid-cols-4 items-center space-y-1 space-x-1 overflow-y-scroll rounded-xl bg-bg p-5 pt-0 text-white scrollbar-thin scrollbar-thumb-card-border ">
+        <div className="min-w-40 flex h-screen w-full md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 flex-col items-center space-y-3 space-x-1 overflow-y-scroll rounded-xl bg-bg p-5 pt-0 text-white scrollbar-thin scrollbar-thumb-card-border md:grid ">
           {tempNFTs.map((nft: any, id: any) => {
             if (nft.owner === address) {
               console.log(id, nft)

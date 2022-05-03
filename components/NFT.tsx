@@ -46,7 +46,7 @@ function NFT({ nft, id }: any) {
 
   return (
     <div
-      className="flex h-[25rem] w-5/6 flex-col items-center self-center rounded-xl border border-bright bg-gradient-to-r from-light to-card-border hover:-translate-y-2 transition-all duration-300 ease-in-out"
+      className="flex s:h-[25rem] lg:h-[30rem] s:w-[18rem] sm:w-[20rem] lg:w-[25rem] flex-col items-center self-center rounded-xl border border-bright bg-gradient-to-r from-light to-card-border md:transition-all md:duration-300 md:ease-in-out lg:hover:-translate-y-2"
       key={nft.metadata.id}
       id={id}
     >
@@ -54,23 +54,23 @@ function NFT({ nft, id }: any) {
         <img
           src={nft.metadata.image}
           alt=""
-          className="h-5/6 w-5/6 rounded-tl-3xl rounded-br-3xl rounded-bl rounded-tr object-cover shadow-lg hover:scale-105 transition-all duration-100 ease-out"
+          className="h-5/6 w-5/6 rounded-tl-3xl rounded-br-3xl rounded-bl rounded-tr object-cover shadow-lg lg:transition-all lg:duration-100 lg:ease-out lg:hover:scale-105"
         />
       </div>
-      <div className="ml-8 pl-2 flex w-full self-start">
+      <div className="ml-8 flex w-full self-start pl-2">
         <span className="text-xl font-bold tracking-widest">
           {nft.metadata.name}
         </span>
         {/* <span className="font-bold">{nft.metadata.description}</span> */}
       </div>
-      <div className="ml-8 mt-2 flex w-4/6 h-16 pl-2 items-center self-start rounded hover:bg-gradient-to-l hover:bg-opacity-60 from-light to-card-border hover:shadow-xl">
+      <div className="ml-8 mt-2 flex h-16 w-4/6 items-center self-start rounded from-light to-card-border pl-2 hover:bg-opacity-60 hover:bg-gradient-to-l hover:shadow-xl">
         <img
           src="https://i.imgur.com/FJjRLVp.jpg"
           className="h-12 w-12 rounded object-cover"
         />
-        <div>
-          <span className="ml-2 text-lg font-semibold">excentrix</span>
-        </div>
+        {/* <div> */}
+        <span className="ml-2 min-w-full text-lg font-semibold">excentrix</span>
+        {/* </div> */}
       </div>
       <div className="flex h-10 w-full items-center justify-end p-1 ">
         {/* <button

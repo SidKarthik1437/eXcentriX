@@ -16,7 +16,7 @@ function Header() {
   const [open, setOpen] = useState(true)
 
   return (
-    <aside className="min-w-14 max-w-32 absolute top-0 left-2 z-50 flex h-full select-none flex-col items-center rounded-b border-b">
+    <aside className="hidden md:flex min-w-14 max-w-32 absolute top-0 left-2 z-50 h-full select-none flex-col items-center rounded-b border-b">
       <div
         className={`my-4 flex h-full w-16 flex-col items-center rounded-xl bg-card-bg pt-4 transition-all duration-100 ease-in-out`}
       >
