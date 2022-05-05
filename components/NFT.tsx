@@ -10,13 +10,13 @@ function NFT({ nft, id }: any) {
   const marketplace = sdk?.getMarketplace(constants.market)
 
   const createListing = async (e: any) => {
-    console.log(e.target.id)
+    console.log(id)
     console.log('Starting to List NFT')
     const auction = {
       // address of the contract the asset you want to list is on
       assetContractAddress: constants.collection,
       // token ID of the asset you want to list
-      tokenId: e.target.id,
+      tokenId: id,
       // in how many seconds with the listing open up
       startTimeInSeconds: 0,
       // how long the listing will be open for
@@ -33,16 +33,17 @@ function NFT({ nft, id }: any) {
       reservePricePerToken: '1.5',
     }
 
-    try {
-      const tx = await marketplace?.direct.createListing(auction)
-      const receipt = tx?.receipt // the transaction receipt
-      const listingId = tx?.id // the id of the newly created listing
-      console.log(receipt, listingId)
-    } catch (err) {
-      console.log(err)
-    }
+    // try {
+    //   const tx = await marketplace?.direct.createListing(auction)
+    //   const receipt = tx?.receipt // the transaction receipt
+    //   const listingId = tx?.id // the id of the newly created listing
+    //   console.log(receipt, listingId)
+    // } catch (err) {
+    //   console.log(err)
+    // }
     console.log('NFT Listed!')
   }
+  console.log(nft)
 
   return (
     <div

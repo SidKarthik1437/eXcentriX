@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ThirdwebSDK } from '@thirdweb-dev/sdk'
 import { BigNumberish, ethers } from 'ethers'
-import { useAddress, useMarketplace } from '@thirdweb-dev/react'
+import { useAddress, useMarketplace, useMetamask } from '@thirdweb-dev/react'
 import Header from './Header'
 import { useRecoilState } from 'recoil'
 import { constantState } from '../atoms/tw.js'
@@ -21,20 +21,22 @@ function Dashboard() {
   const [listings, setListings] = useState<any>()
 
   const marketplace = useMarketplace(constants.market)
+  const connectWithMetamask = useMetamask()
+  const address = useAddress()
 
   // useEffect(() => {
-  const getAllListings = async () => {
+  useEffect(() => {
     // setListings(null)
-    try {
-      await marketplace?.getActiveListings().then((listings) => {
-        console.log(listings)
-        setListings(listings)
-      })
-    } catch (err) {
-      console.log(err)
-    }
-  }
-  // }, [])
+    ;(async () => {
+      if (address)
+        await marketplace?.getActiveListings().then((listings) => {
+          console.log(listings)
+          setListings(listings)
+        })
+      else connectWithMetamask()
+    })()
+  }, [marketplace?.getActiveListings, address, connectWithMetamask])
+  // }, [])S
 
   const buyOut = async (e: any) => {
     console.log(e.target.id)
@@ -46,14 +48,14 @@ function Dashboard() {
   }
 
   return (
-    <div className="mt-14 md:pl-20 flex h-screen w-full select-none items-center justify-center overflow-y-hidden">
+    <div className="mt-14 flex h-screen w-full select-none items-center justify-center overflow-y-hidden md:pl-20">
       <div className="mt flex h-screen w-full flex-col items-center space-y-1 space-x-1 bg-bg px-1 ">
-        <button
+        {/* <button
           onClick={() => getAllListings()}
           className="mt-2 rounded-lg bg-card-border py-1 px-4 text-white"
         >
           Get
-        </button>
+        </button> */}
         <div className="grid h-screen w-full grid-cols-5 items-center space-y-1 space-x-1 overflow-y-scroll rounded-xl bg-bg p-5 pt-0 text-white scrollbar-thin scrollbar-thumb-card-border ">
           {listings?.map((listing: any, id: any) => (
             <div

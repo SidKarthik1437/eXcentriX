@@ -1,6 +1,6 @@
 import { atom } from 'recoil'
 
-export const nftState = atom({
-  key: 'nftState',
+export const mynftState = atom({
+  key: 'mynftState',
   default: [],
 })

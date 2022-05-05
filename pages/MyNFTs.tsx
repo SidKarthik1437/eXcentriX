@@ -1,6 +1,7 @@
 import {
   useAddress,
   useMarketplace,
+  useMetamask,
   useNFTCollection,
   useSDK,
 } from '@thirdweb-dev/react'
@@ -9,7 +10,7 @@ import { ethers } from 'ethers'
 import React, { Component, useEffect, useState, Fragment } from 'react'
 import { useRecoilState } from 'recoil'
 import { constantState } from '../atoms/tw'
-import { nftState } from '../atoms/data'
+import { mynftState } from '../atoms/data'
 import { PaperAirplaneIcon, ScaleIcon } from '@heroicons/react/outline'
 import { XCircleIcon } from '@heroicons/react/outline'
 import { Dialog, Transition } from '@headlessui/react'
@@ -17,42 +18,33 @@ import NFT from '../components/NFT'
 
 function MyNFTs() {
   const [constants] = useRecoilState(constantState)
-  const [nfts, setNFTs] = useRecoilState(nftState)
   const sdk = useSDK()
   const marketplace = useMarketplace(constants.market)
   const nftCollection = useNFTCollection(constants.collection)
-  const [myNFTs, setMyNFTs] = useState<any>([])
-  const [tempNFTs, setTempNFTs] = useState<any>([])
+  const [myNFTs, setMyNFTs] = useRecoilState<any>(mynftState)
   const [final, setFinal] = useState<any>([])
 
   const [toAdd, setToAdd] = useState('')
   const [open, setOpen] = useState<boolean>(false)
 
-  const getMyNFTs = async () => {
-    const allNfts = await nftCollection?.getAll().then((nfts) => {
-      setTempNFTs(nfts)
-    })
-    console.log(tempNFTs)
-    const nfts = await nftCollection?.getOwned().then((nfts) => {
-      setMyNFTs(nfts)
-      // console.log(nfts)
-      nfts.map((nft: any) => {
-        // console.log(nft.metadata.id)
-        // console.log(nft.getAddress())
-      })
-    })
-  }
-
-  useEffect(() => {
-   
-  }, [])
-  
-
-  const address = useAddress()
-  const Filter = () => {
+  // const getMyNFTs = async () => {
+  //   const allNfts = await nftCollection?.getAll().then((nfts) => {
+  //     setTempNFTs(nfts)
+  //   })
+  //   console.log(tempNFTs)
+  //   const nfts = await nftCollection?.getOwned().then((nfts) => {
+  //     setMyNFTs(nfts)
+  //     // console.log(nfts)
+  //     nfts.map((nft: any) => {
+  //       // console.log(nft.metadata.id)
+  //       // console.log(nft.getAddress())
+  //     })
+  //   })
+  // }
+  const Filter = (nfts: any) => {
     // myNFTs.forEach((element: any, id: any) => {
-    tempNFTs.forEach((ele: any, i: any) => {
-      if (ele.owner == address) {
+    nfts.forEach((ele: any, i: any) => {
+      if (ele.owner === address) {
         // console.log(ele)
         let list = final.concat({ id: i, nft: ele })
         setFinal(list)
@@ -61,22 +53,18 @@ function MyNFTs() {
     })
     // })
   }
+  const connectWithMetamask = useMetamask()
+  const address = useAddress()
+  useEffect(() => {
+    (async () => {
+      if (address) {
+        setMyNFTs(await nftCollection?.getOwned(address))
+      } else connectWithMetamask()
+    })()
+  }, [address])
 
-  const Burn = async () => {
-    const tokenId = 0
-
-    await nftCollection?.burn(tokenId).then((res: any) => {
-      console.log('burn successful', res)
-    })
-  }
-
-  const transfer = async (e: any) => {
-    let tokenId = e
-    console.log(tokenId)
-    await nftCollection?.transfer(toAdd, tokenId)
-  }
   const createListing = async (e: any) => {
-    console.log(e.target.id)
+    console.log(e.target)
     console.log('Starting to List NFT')
     const listing = {
       // address of the NFT contract the asset you want to list is on
@@ -95,23 +83,23 @@ function MyNFTs() {
       buyoutPricePerToken: '1.5',
     }
 
-    try {
-      const tx = await marketplace?.direct.createListing(listing)
-      const receipt = tx?.receipt // the transaction receipt
-      const listingId = tx?.id // the id of the newly created listing
-      console.log(receipt, listingId)
-    } catch (err) {
-      console.log(err)
-    }
+    // try {
+    //   const tx = await marketplace?.direct.createListing(listing)
+    //   const receipt = tx?.receipt // the transaction receipt
+    //   const listingId = tx?.id // the id of the newly created listing
+    //   console.log(receipt, listingId)
+    // } catch (err) {
+    //   console.log(err)
+    // }
     console.log('NFT Listed!')
   }
-  console.log('hehe',tempNFTs)
-  console.log('huhu',myNFTs)
+  // console.log('hehe',tempNFTs)
+  // console.log('huhu', final)
 
   return (
     <div className="mt-14 flex h-screen w-full select-none items-center justify-center overflow-x-hidden overflow-y-hidden pb-14 md:pl-20">
       <div className="flex h-full w-full flex-col items-center space-y-1 space-x-1 overflow-x-hidden overflow-y-hidden bg-bg px-1">
-        <div className="mx-5 mt-1 hidden h-10 w-full items-center justify-between self-start overflow-y-hidden text-lg text-white md:flex">
+        {/* <div className="mx-5 mt-1 hidden h-10 w-full items-center justify-between self-start overflow-y-hidden text-lg text-white md:flex">
           <span className="text-white">Your NFTs</span>
           <button
             onClick={() => getMyNFTs()}
@@ -137,11 +125,11 @@ function MyNFTs() {
           >
             Create Listing
           </button>
-        </div>
+        </div> */}
         <div className="min-w-40 flex h-screen w-full flex-col items-center space-y-3 space-x-1 overflow-y-scroll rounded-xl bg-bg p-5 pt-0 text-white scrollbar-thin scrollbar-thumb-card-border md:grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 ">
-          {tempNFTs.map((nft: any, id: any) => {
+          {final.map((nft: any, id: any) => {
             if (nft.owner === address) {
-              console.log(id, nft)
+              console.log(id)
               return <NFT nft={nft} key={id} id={id} />
             }
           })}
@@ -206,13 +194,13 @@ function MyNFTs() {
                         <span>Close</span>
                         <XCircleIcon className="h-6 w-6 pl-1" />
                       </button>
-                      <button
+                      {/* <button
                         className="flex h-10 w-24 items-center justify-center rounded bg-blue-500 text-white"
                         onClick={(e) => transfer(e)}
                       >
                         <span>Transfer</span>
                         <PaperAirplaneIcon className="h-6 w-6 rotate-45 pl-1 pb-2" />
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 </div>
