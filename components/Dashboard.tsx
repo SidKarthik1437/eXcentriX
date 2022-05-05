@@ -46,7 +46,7 @@ function Dashboard() {
   }
 
   return (
-    <div className="mt-14 flex h-screen w-full select-none items-center justify-center overflow-y-hidden">
+    <div className="mt-14 md:pl-20 flex h-screen w-full select-none items-center justify-center overflow-y-hidden">
       <div className="mt flex h-screen w-full flex-col items-center space-y-1 space-x-1 bg-bg px-1 ">
         <button
           onClick={() => getAllListings()}

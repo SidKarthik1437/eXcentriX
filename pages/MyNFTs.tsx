@@ -9,6 +9,7 @@ import { ethers } from 'ethers'
 import React, { Component, useEffect, useState, Fragment } from 'react'
 import { useRecoilState } from 'recoil'
 import { constantState } from '../atoms/tw'
+import { nftState } from '../atoms/data'
 import { PaperAirplaneIcon, ScaleIcon } from '@heroicons/react/outline'
 import { XCircleIcon } from '@heroicons/react/outline'
 import { Dialog, Transition } from '@headlessui/react'
@@ -16,6 +17,7 @@ import NFT from '../components/NFT'
 
 function MyNFTs() {
   const [constants] = useRecoilState(constantState)
+  const [nfts, setNFTs] = useRecoilState(nftState)
   const sdk = useSDK()
   const marketplace = useMarketplace(constants.market)
   const nftCollection = useNFTCollection(constants.collection)
@@ -40,6 +42,11 @@ function MyNFTs() {
       })
     })
   }
+
+  useEffect(() => {
+   
+  }, [])
+  
 
   const address = useAddress()
   const Filter = () => {
@@ -98,6 +105,8 @@ function MyNFTs() {
     }
     console.log('NFT Listed!')
   }
+  console.log('hehe',tempNFTs)
+  console.log('huhu',myNFTs)
 
   return (
     <div className="mt-14 flex h-screen w-full select-none items-center justify-center overflow-x-hidden overflow-y-hidden pb-14 md:pl-20">
@@ -129,7 +138,7 @@ function MyNFTs() {
             Create Listing
           </button>
         </div>
-        <div className="min-w-40 flex h-screen w-full md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 flex-col items-center space-y-3 space-x-1 overflow-y-scroll rounded-xl bg-bg p-5 pt-0 text-white scrollbar-thin scrollbar-thumb-card-border md:grid ">
+        <div className="min-w-40 flex h-screen w-full flex-col items-center space-y-3 space-x-1 overflow-y-scroll rounded-xl bg-bg p-5 pt-0 text-white scrollbar-thin scrollbar-thumb-card-border md:grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 ">
           {tempNFTs.map((nft: any, id: any) => {
             if (nft.owner === address) {
               console.log(id, nft)

@@ -46,7 +46,7 @@ function NFT({ nft, id }: any) {
 
   return (
     <div
-      className="flex s:h-[25rem] lg:h-[30rem] s:w-[18rem] sm:w-[20rem] lg:w-[25rem] flex-col items-center self-center rounded-xl border border-bright bg-gradient-to-r from-light to-card-border md:transition-all md:duration-300 md:ease-in-out lg:hover:-translate-y-2"
+      className="flex s:h-[25rem] lg:h-[30rem] s:w-[18rem] sm:w-[20rem] lg:w-[22rem] flex-col items-center self-center rounded-xl border border-bright bg-gradient-to-r from-light to-card-border md:transition-all md:duration-300 md:ease-in-out lg:hover:-translate-y-2"
       key={nft.metadata.id}
       id={id}
     >
